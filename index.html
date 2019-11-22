@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>STUDENT SEARCH</title>
+</head>
+
+<body>
+   <!-- onchange : select의 값이 바뀌면 function 실행하세요-->
+    <select id="js-select" onchange="changeValue()"></select>
+    <div id="infoArea">
+        <div id="name"></div>
+        <div id="gender"></div>
+        <div id="birth"></div>
+    </div>
+</body>
+
+<script>
+    // 사람의 정보를 저장해요.
+    // 이 정보는 데이터베이스에서 온 것. name , gender , birth
+    // 배열 - 하나의 저장 공간에 여러개를 저장할 수 있는 기능
+    // 객체 - 사람 {이름, 성별, 생년월일} { 중괄호}는 객체라는 의미
+    // 객체를 여러개 저장해야함
+    // 1. 객체를 저장할 저장공간을 만든다
+    // 2. 객체별 정보를 넣는다.
+    const people = [{
+            name: "ryan",
+            gender: "M",
+            birth: "071010"
+        },
+        {
+            name: "muzi",
+            gender: "F",
+            birth: "080611"
+        },
+        {
+            name: "con",
+            gender: "M",
+            birth: "090322"
+        }
+    ];
+    
+    /*  
+        1.people이 가지고 있는 객체 만큼 반복
+        2. 반복할때, 객체들이 각각에 가지고 있는 name을 select에다가 넣어야해요.    
+    */
+    // ES6 존재하는 방법 - allow function //ES6, ES7
+    //React-Native -> ES6 default
+    const valueSetting = () => {
+        // html에 만들어져있는 js-select를 가져온다
+        const selectBox = document.getElementById("js-select"); // DOM을 넣었다.
+        
+        //people 이라는 데이커가 가지고있는 개수 만큼 반복
+        //하나씩 뽑아서 p에다가 넣는다
+        people.map(p => { 
+            //option 이라는 DOM을 생성
+            const option = document.createElement("option");
+            
+            //html에서 가져온 DOM에다가 append=추가.
+            option.text = p.name;
+            selectBox.appendChild(option);
+        });
+    }
+    
+    const changeValue = () => {
+//        console.log("값이 바뀌었어요!");
+      // 1. 바뀐 값이 (선택한값) people에 있는 객체 중 누구랑 똑같은가?
+    // js-select라는 html을 selectBox에 저장한다    
+    const selectBox = document.getElementById("js-select");
+    
+    //저장한 selectBox의 현재 값을 currentValue에 저장한다    
+    const currentValue = selectBox.options[selectBox.selectedIndex].value;
+        
+      // 2. 같다면, 그 객체가 가진 데이터를 html에 innerTEXT해주세요.
+    people.map( p => {
+        if (p.name === currentValue) {
+            console.log(p.name);
+            console.log(p.gender);
+            console.log(p.birth);
+            
+            const name = document.getElementById("name");
+            const gender = document.getElementById("gender");
+            const birth = document.getElementById("birth");
+            
+            // p.xxx를 가져온 html에 넣어요
+            name.innerText = p.name;
+            gender.innerText = p.gender;
+            birth.innerText = p.birth;
+        }
+    });    
+    };
+    
+    
+    
+    
+    // 자바스크립트는 실행하라고 명령을 줘야 실행해요.
+    // init 은 페이지가 로드 된 후 실행하세요.
+    function init(){
+        valueSetting();
+    }
+    
+    init();
+    
+    
+</script>
+</html>
+
+
+
+
+
+
+
+
